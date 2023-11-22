@@ -1,6 +1,10 @@
 'use client'
 
 import { trpc } from '@/app/api/client'
+import Button from '@/components/button'
+import Input from '@/components/input'
+import Label from '@/components/label'
+import TextField from '@/components/text-field'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
@@ -35,38 +39,33 @@ export default function SignUpForm() {
   return (
     <form onSubmit={handleSubmit}>
       <fieldset disabled={isLoading} className="grid gap-3">
-        <label className="grid gap-1">
-          Username
-          <input
+        <TextField>
+          <Label>Username</Label>
+          <Input
             name="Username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             autoFocus
           />
-        </label>
-        <label className="grid gap-1">
-          Email
-          <input
+        </TextField>
+        <TextField>
+          <Label>Email</Label>
+          <Input
             name="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-        </label>
-        <label className="grid gap-1">
-          Password
-          <input
+        </TextField>
+        <TextField>
+          <Label>Password</Label>
+          <Input
             name="Password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             type="password"
           />
-        </label>
-        <button
-          type="submit"
-          className="p-2 bg-indigo-700 text-indigo-100 hover:bg-indigo-800 rounded-sm font-extrabold tracking-wider"
-        >
-          Sign Up
-        </button>
+        </TextField>
+        <Button type="submit">Sign Up</Button>
       </fieldset>
     </form>
   )

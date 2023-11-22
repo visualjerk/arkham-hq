@@ -1,6 +1,10 @@
 'use client'
 
 import { trpc } from '@/app/api/client'
+import Button from '@/components/button'
+import Input from '@/components/input'
+import Label from '@/components/label'
+import TextField from '@/components/text-field'
 import { useSearchParams } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
@@ -38,25 +42,20 @@ export default function ConfirmSignUpForm() {
             We sent you a confirmation code to <strong>{contact}</strong>
           </p>
         )}
-        <label className="grid gap-1">
-          Username
-          <input name="Username" value={username} readOnly />
-        </label>
-        <label className="grid gap-1">
-          Code
-          <input
+        <TextField>
+          <Label>Username</Label>
+          <Input name="Username" value={username} readOnly />
+        </TextField>
+        <TextField>
+          <Label>Code</Label>
+          <Input
             name="Code"
             value={code}
             autoFocus
             onChange={(event) => setCode(event.target.value)}
           />
-        </label>
-        <button
-          type="submit"
-          className="p-2 bg-indigo-700 text-indigo-100 hover:bg-indigo-800 rounded-sm font-extrabold tracking-wider"
-        >
-          Confirm Sign Up
-        </button>
+        </TextField>
+        <Button type="submit">Confirm Sign Up</Button>
       </fieldset>
     </form>
   )
