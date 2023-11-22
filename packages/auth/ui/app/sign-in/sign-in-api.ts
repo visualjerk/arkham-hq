@@ -3,6 +3,9 @@ import { SignInDTO } from './sign-in-schema'
 import { InitiateAuthCommand } from '@aws-sdk/client-cognito-identity-provider'
 import { getClient } from '@/lib/cognito-client'
 import { TRPCError } from '@trpc/server'
+import { cookies } from 'next/headers'
+
+const AUTH_COOKIE_NAME = 'arkham-hq-token'
 
 export const signInApi = {
   signIn: procedure.input(SignInDTO).mutation(async ({ input }) => {
@@ -17,8 +20,19 @@ export const signInApi = {
       })
 
       const response = await getClient().send(command)
+      const token = response.AuthenticationResult?.AccessToken
 
-      return response
+      if (!token) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Missing AccessToken',
+        })
+      }
+
+      cookies().set(AUTH_COOKIE_NAME, token, {
+        httpOnly: true,
+        sameSite: true,
+      })
     } catch (e) {
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
