@@ -4,8 +4,7 @@ import { InitiateAuthCommand } from '@aws-sdk/client-cognito-identity-provider'
 import { getClient } from '@/lib/cognito-client'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
-
-const AUTH_COOKIE_NAME = 'arkham-hq-token'
+import { AUTH_COOKIE_NAME } from '@/lib/constants'
 
 export const signInApi = {
   signIn: procedure.input(SignInDTO).mutation(async ({ input }) => {

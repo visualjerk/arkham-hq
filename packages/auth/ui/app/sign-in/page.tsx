@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import PageHeading from '@/components/page-heading'
-import SignInForm from './sign-in-form'
+import SignInForm from './sign-in-form-server'
 
 export default function SignUpPage() {
   return (
