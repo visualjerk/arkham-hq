@@ -5,7 +5,7 @@ import Button from '@/components/button'
 import Input from '@/components/input'
 import Label from '@/components/label'
 import TextField from '@/components/text-field'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
 export default function ConfirmSignUpForm() {
@@ -13,6 +13,7 @@ export default function ConfirmSignUpForm() {
     trpc.confirmSignUp.useMutation()
 
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   const username = searchParams.get('username')
   const contact = searchParams.get('contact')
@@ -30,6 +31,8 @@ export default function ConfirmSignUpForm() {
       username,
       code,
     })
+
+    router.push('/sign-in')
   }
 
   return username == null ? (

@@ -23,6 +23,10 @@ export class AuthStack extends Stack {
       },
     })
 
-    userPool.addClient('ArkhamHqAuthClient')
+    userPool.addClient('ArkhamHqAuthClient', {
+      authFlows: {
+        userPassword: true,
+      },
+    })
   }
 }

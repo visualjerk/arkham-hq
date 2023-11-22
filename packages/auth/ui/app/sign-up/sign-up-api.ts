@@ -1,10 +1,10 @@
 import { procedure } from '@/app/api/trpc/trpc'
-import { SignupDTO } from './signup-schema'
+import { SignUpDTO } from './sign-up-schema'
 import { SignUpCommand } from '@aws-sdk/client-cognito-identity-provider'
 import { getClient } from '@/lib/cognito-client'
 
 export const signUpApi = {
-  signup: procedure.input(SignupDTO).mutation(({ input }) => {
+  signup: procedure.input(SignUpDTO).mutation(({ input }) => {
     try {
       const command = new SignUpCommand({
         ClientId: process.env.AWS_AUTH_CLIENT_ID,
