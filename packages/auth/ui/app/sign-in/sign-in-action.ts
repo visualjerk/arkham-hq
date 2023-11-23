@@ -38,6 +38,7 @@ export async function signIn(prevState: any, formData: FormData) {
     }
 
     cookies().set(AUTH_COOKIE_NAME, token, {
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       sameSite: true,
     })
