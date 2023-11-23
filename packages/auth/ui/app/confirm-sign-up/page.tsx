@@ -7,7 +7,7 @@ export default function SignUpPage() {
     <main className="grid gap-5 max-w-md p-10">
       <PageHeading>Confirm Sign Up</PageHeading>
       <ConfirmSignUpForm />
-      <Link href="/">Sign In</Link>
+      <Link href="/sign-up">Sign Up</Link>
     </main>
   )
 }
