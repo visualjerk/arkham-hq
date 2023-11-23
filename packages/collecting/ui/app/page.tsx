@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 
+const baseUrl = process.env.BASE_URL
 const authBaseUrl = process.env.AUTH_SERVICE_URL
 
 type User = {
@@ -19,12 +20,12 @@ async function getUser(): Promise<undefined | User> {
 }
 
 export default async function Home() {
-  const signInLink = `${authBaseUrl}/sign-in`
+  const signInLink = `${authBaseUrl}/sign-in?redirectTo=${baseUrl}`
 
   const user = await getUser()
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="grid gap-10 p-10">
       <h1>Arkham HQ Collecting</h1>
       {user ? (
         <p>Logged in as {user.username}</p>

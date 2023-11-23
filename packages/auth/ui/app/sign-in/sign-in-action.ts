@@ -12,6 +12,7 @@ export async function signIn(prevState: any, formData: FormData) {
   const parse = SignInDTO.safeParse({
     username: formData.get('username'),
     password: formData.get('password'),
+    redirectTo: formData.get('redirectTo'),
   })
 
   if (!parse.success) {
@@ -47,5 +48,5 @@ export async function signIn(prevState: any, formData: FormData) {
   }
 
   revalidatePath('/')
-  redirect('/')
+  redirect(data.redirectTo)
 }

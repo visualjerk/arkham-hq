@@ -7,6 +7,7 @@ import TextField from '@/components/text-field'
 import { signIn } from './sign-in-action'
 import { useFormState, useFormStatus } from 'react-dom'
 import { PropsWithChildren } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 type FieldsetProps = PropsWithChildren<{}>
 
@@ -20,12 +21,15 @@ function Fieldset({ children }: FieldsetProps) {
 }
 
 export default function SignInForm() {
-  const [state, formAction] = useFormState(signIn, {
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo')
+
+  const [state, signInAction] = useFormState(signIn, {
     message: '',
   })
 
   return (
-    <form action={formAction}>
+    <form action={signInAction}>
       <Fieldset>
         <TextField>
           <Label>Username</Label>
@@ -35,6 +39,7 @@ export default function SignInForm() {
           <Label>Password</Label>
           <Input name="password" type="password" />
         </TextField>
+        <input name="redirectTo" type="hidden" value={redirectTo ?? '/'} />
         <Button type="submit">Sign In</Button>
       </Fieldset>
     </form>
