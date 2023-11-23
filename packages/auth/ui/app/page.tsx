@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <main className="grid gap-5 max-w-md p-10">
       <h1 className="text-xl font-semibold">Sign In</h1>
-      {!!token && <pre className="p-2 bg-white">Token: {token.value}</pre>}
+      {!!token && (
+        <input className="p-2 bg-white" value={token.value} readOnly></input>
+      )}
       <Link href="/sign-in">Sign In</Link>
       <Link href="/sign-up">Sign Up</Link>
     </main>
