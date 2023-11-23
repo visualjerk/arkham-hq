@@ -1,17 +1,5 @@
 # Arkham HQ Auth UI
 
-Auth service for Arkham HQ. Used to create and authenticate users.
-
-Pages:
-
-- `/sign-up`: Create a new account
-- `/confirm-sign-up`: Confirm an email address
-- `/sign-in`: Login to an existing account and set an auth token cookie
-
-Endpoint:
-
-- `/user`: Get username based on an auth token
-
 ## Getting Started
 
 First, run the development server:
