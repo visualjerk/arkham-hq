@@ -108,9 +108,6 @@ importers:
 
   packages/collecting/ui:
     dependencies:
-      '@arkham-hq/auth-ui':
-        specifier: workspace:*
-        version: link:../../auth/ui
       next:
         specifier: 14.0.3
         version: 14.0.3(react-dom@18.2.0)(react@18.2.0)

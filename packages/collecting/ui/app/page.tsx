@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers'
-import { AUTH_COOKIE_NAME, AUTH_HEADER_NAME } from '@arkham-hq/auth-ui'
 
 const authBaseUrl = process.env.AUTH_SERVICE_URL
 
@@ -8,16 +7,8 @@ type User = {
 }
 
 async function getUser(): Promise<undefined | User> {
-  const token = cookies().get(AUTH_COOKIE_NAME)
-
-  if (!token) {
-    return
-  }
-
   const response = await fetch(`${authBaseUrl}/user`, {
-    headers: {
-      [AUTH_HEADER_NAME]: token.value,
-    },
+    headers: { Cookie: cookies().toString() },
   })
 
   if (!response.ok) {
