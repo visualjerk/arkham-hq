@@ -1,3 +1,4 @@
+import { PageHeading } from '@arkham-hq/components'
 import { cookies } from 'next/headers'
 
 const baseUrl = process.env.BASE_URL
@@ -26,7 +27,7 @@ export default async function Home() {
 
   return (
     <main className="grid gap-10 p-10">
-      <h1>Arkham HQ Collecting</h1>
+      <PageHeading>Arkham HQ Collecting</PageHeading>
       {user ? (
         <p>Logged in as {user.username}</p>
       ) : (
