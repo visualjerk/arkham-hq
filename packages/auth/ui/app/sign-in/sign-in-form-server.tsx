@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/components/button'
+import { Button } from '@arkham-hq/shared-ui'
 import Input from '@/components/input'
 import Label from '@/components/label'
 import TextField from '@/components/text-field'

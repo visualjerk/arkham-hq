@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@arkham-hq/shared-ui": "workspace:*",
     "@aws-sdk/client-cognito-identity-provider": "^3.454.0",
     "@tanstack/react-query": "^4.18.0",
     "@trpc/client": "^10.44.0",

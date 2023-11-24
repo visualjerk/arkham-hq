@@ -1,4 +1,4 @@
-import { PageHeading } from '@arkham-hq/components'
+import { PageHeading } from '@arkham-hq/shared-ui'
 import { cookies } from 'next/headers'
 
 const baseUrl = process.env.BASE_URL

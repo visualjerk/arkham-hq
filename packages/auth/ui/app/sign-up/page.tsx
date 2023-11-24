@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import SignUpForm from './sign-up-form'
-import PageHeading from '@/components/page-heading'
+import { PageHeading } from '@arkham-hq/shared-ui'
 
 export default function SignUpPage() {
   return (

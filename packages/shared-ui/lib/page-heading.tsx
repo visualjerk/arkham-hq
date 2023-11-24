@@ -4,11 +4,7 @@ export type HeadingProps = PropsWithChildren<
   HtmlHTMLAttributes<HTMLHeadingElement>
 >
 
-export default function PageHeading({
-  children,
-  className,
-  ...props
-}: HeadingProps) {
+export function PageHeading({ children, className, ...props }: HeadingProps) {
   return (
     <h1
       {...props}
