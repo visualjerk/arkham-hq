@@ -6,13 +6,14 @@ Pages:
 
 - `/sign-up`: Create a new account
 - `/confirm-sign-up`: Confirm an email address
-- `/sign-in`: Login to an existing account and set an auth token cookie
+- `/sign-in?redirectTo=[AppUrl]`: Login to an existing account and set an auth token cookie
 
 Endpoint:
 
 - `/user`: Get username based on an auth token
+- `/sign-out?redirectTo=[AppUrl]`: Revoke auth token and delete auth token cookie
 
-## Getting Started
+## Development
 
 First, run the development server:
 

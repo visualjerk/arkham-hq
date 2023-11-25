@@ -5,7 +5,10 @@ import { SignInDTO } from './sign-in-schema'
 import { getClient } from '@/lib/cognito-client'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { AUTH_COOKIE_NAME } from '@/lib/constants'
+import {
+  AUTH_TOKEN_COOKIE_NAME,
+  REFRESH_TOKEN_COOKIE_NAME,
+} from '@/lib/constants'
 import { revalidatePath } from 'next/cache'
 
 export async function signIn(prevState: any, formData: FormData) {
@@ -33,12 +36,18 @@ export async function signIn(prevState: any, formData: FormData) {
 
     const response = await getClient().send(command)
     const token = response.AuthenticationResult?.AccessToken
+    const refreshToken = response.AuthenticationResult?.RefreshToken
 
-    if (!token) {
+    if (!token || !refreshToken) {
       return { message: 'Failed to signin' }
     }
 
-    cookies().set(AUTH_COOKIE_NAME, token, {
+    cookies().set(AUTH_TOKEN_COOKIE_NAME, token, {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      sameSite: true,
+    })
+    cookies().set(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       sameSite: true,

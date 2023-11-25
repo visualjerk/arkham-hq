@@ -22,6 +22,7 @@ async function getUser(): Promise<undefined | User> {
 
 export default async function Home() {
   const signInLink = `${authBaseUrl}/sign-in?redirectTo=${baseUrl}`
+  const signOutLink = `${authBaseUrl}/sign-out?redirectTo=${baseUrl}`
 
   const user = await getUser()
 
@@ -29,7 +30,9 @@ export default async function Home() {
     <main className="grid gap-10 p-10">
       <PageHeading>Arkham HQ Collecting</PageHeading>
       {user ? (
-        <p>Logged in as {user.username}</p>
+        <p>
+          Logged in as {user.username} <a href={signOutLink}>Sign Out</a>
+        </p>
       ) : (
         <a href={signInLink}>Sign In</a>
       )}

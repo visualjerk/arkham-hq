@@ -1,10 +1,10 @@
 import { getClient } from '@/lib/cognito-client'
-import { AUTH_COOKIE_NAME } from '@/lib/constants'
+import { AUTH_TOKEN_COOKIE_NAME } from '@/lib/constants'
 import { GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
-import { NextRequest } from 'next/server'
+import { cookies } from 'next/headers'
 
-export async function GET(request: NextRequest) {
-  const token = request.cookies.get(AUTH_COOKIE_NAME)
+export async function GET() {
+  const token = cookies().get(AUTH_TOKEN_COOKIE_NAME)
 
   if (!token) {
     return new Response('unauthorized', {

@@ -1,9 +1,9 @@
-import { AUTH_COOKIE_NAME } from '@/lib/constants'
+import { AUTH_TOKEN_COOKIE_NAME } from '@/lib/constants'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 export default function Home() {
-  const token = cookies().get(AUTH_COOKIE_NAME)
+  const token = cookies().get(AUTH_TOKEN_COOKIE_NAME)
 
   return (
     <main className="grid gap-5 max-w-md p-10">
