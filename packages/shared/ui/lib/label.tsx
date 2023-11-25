@@ -1,3 +1,5 @@
+'use client'
+
 import { Label as AriaLabel, LabelProps } from 'react-aria-components'
 
 export function Label({ className, children, ...props }: LabelProps) {

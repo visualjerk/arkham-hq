@@ -1,3 +1,5 @@
+'use client'
+
 import { Input as AriaInput, InputProps } from 'react-aria-components'
 
 export function Input({ className, ...props }: InputProps) {

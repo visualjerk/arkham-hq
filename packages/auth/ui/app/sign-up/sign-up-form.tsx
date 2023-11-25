@@ -1,10 +1,7 @@
 'use client'
 
 import { trpc } from '@/app/api/client'
-import { Button } from '@arkham-hq/shared-ui'
-import Input from '@/components/input'
-import Label from '@/components/label'
-import TextField from '@/components/text-field'
+import { Button, Input, Label, TextField } from '@arkham-hq/shared-ui'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 

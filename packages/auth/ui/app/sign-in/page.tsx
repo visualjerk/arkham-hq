@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { PageHeading } from '@arkham-hq/shared-ui'
-import SignInForm from './sign-in-form-server'
+import SignInForm from './sign-in-form'
 
 export default function SignUpPage() {
   return (

@@ -1,57 +1,44 @@
 'use client'
 
-import { trpc } from '@/app/api/client'
-import { Button } from '@arkham-hq/shared-ui'
-import Input from '@/components/input'
-import Label from '@/components/label'
-import TextField from '@/components/text-field'
-import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { Button, Input, Label, TextField } from '@arkham-hq/shared-ui'
+import { signIn } from './sign-in-action'
+import { useFormState, useFormStatus } from 'react-dom'
+import { PropsWithChildren } from 'react'
+import { useSearchParams } from 'next/navigation'
+
+type FieldsetProps = PropsWithChildren<{}>
+
+function Fieldset({ children }: FieldsetProps) {
+  const { pending } = useFormStatus()
+  return (
+    <fieldset className="grid gap-3" disabled={pending}>
+      {children}
+    </fieldset>
+  )
+}
 
 export default function SignInForm() {
-  const { mutateAsync: signIn, isLoading } = trpc.signIn.useMutation()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo')
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const router = useRouter()
-
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault()
-
-    const response = await signIn({
-      username,
-      password,
-    })
-
-    console.log('signed in', response)
-
-    router.push(`/`)
-  }
+  const [state, signInAction] = useFormState(signIn, {
+    message: '',
+  })
 
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset disabled={isLoading} className="grid gap-3">
+    <form action={signInAction}>
+      <Fieldset>
         <TextField>
           <Label>Username</Label>
-          <Input
-            name="Username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-            autoFocus
-          />
+          <Input name="username" autoFocus />
         </TextField>
         <TextField>
           <Label>Password</Label>
-          <Input
-            name="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            type="password"
-          />
+          <Input name="password" type="password" />
         </TextField>
+        <input name="redirectTo" type="hidden" value={redirectTo ?? '/'} />
         <Button type="submit">Sign In</Button>
-      </fieldset>
+      </Fieldset>
     </form>
   )
 }
