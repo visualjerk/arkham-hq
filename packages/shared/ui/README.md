@@ -23,3 +23,9 @@ Build library:
 ```bash
 pnpm build
 ```
+
+Open playground:
+
+```bash
+pnpm dev
+```
