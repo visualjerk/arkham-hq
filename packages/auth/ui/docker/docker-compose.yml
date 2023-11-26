@@ -3,7 +3,7 @@ version: '3'
 services:
   arkham-hq-auth-ui:
     build:
-      # Needed to have the workspace's "pnpm-lock.yaml" in scope
+      # Needed to bring the workspace's "pnpm-lock.yaml" in scope
       context: ../../../../
       dockerfile: packages/auth/ui/docker/Dockerfile
     image: arkham-hq-auth-ui

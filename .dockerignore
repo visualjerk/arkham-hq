@@ -1,7 +1,6 @@
-.dockerignore
 node_modules
-npm-debug.log
-README.md
-.next
-docker
+**/cdk*
+**/npm-debug.log
+**/*.md
+**/.next
 .git
