@@ -1,4 +1,4 @@
-import { PageHeading } from '@arkham-hq/shared-ui'
+import { LinkButton, PageHeading } from '@arkham-hq/shared-ui'
 import { cookies } from 'next/headers'
 
 const baseUrl = process.env.BASE_URL
@@ -30,11 +30,15 @@ export default async function Home() {
     <main className="grid gap-10 p-10">
       <PageHeading>Arkham HQ Collecting</PageHeading>
       {user ? (
-        <p>
-          Logged in as {user.username} <a href={signOutLink}>Sign Out</a>
-        </p>
+        <div>
+          <p className="mb-4">Logged in as {user.username}</p>
+          <LinkButton href={signOutLink}>Sign Out</LinkButton>
+        </div>
       ) : (
-        <a href={signInLink}>Sign In</a>
+        <div>
+          <p className="mb-4">Welcome to Arkham HQ! Please sign in.</p>
+          <LinkButton href={signInLink}>Sign In</LinkButton>
+        </div>
       )}
     </main>
   )
