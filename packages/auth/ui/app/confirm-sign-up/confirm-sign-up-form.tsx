@@ -4,6 +4,7 @@ import { trpc } from '@/app/api/client'
 import { Button, Input, Label, TextField } from '@arkham-hq/shared-ui'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useState } from 'react'
+import { useUrlWithRedirect } from '../utils/use-url-with-redirect'
 
 export default function ConfirmSignUpForm() {
   const { mutateAsync: confirmSignUp, isLoading } =
@@ -14,6 +15,8 @@ export default function ConfirmSignUpForm() {
 
   const username = searchParams.get('username')
   const contact = searchParams.get('contact')
+
+  const signInUrl = useUrlWithRedirect(`/sign-in`)
 
   const [code, setCode] = useState('')
 
@@ -29,7 +32,7 @@ export default function ConfirmSignUpForm() {
       code,
     })
 
-    router.push('/sign-in')
+    router.push(signInUrl.href)
   }
 
   return username == null ? (

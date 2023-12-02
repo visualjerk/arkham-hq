@@ -4,6 +4,7 @@ import { trpc } from '@/app/api/client'
 import { Button, Input, Label, TextField } from '@arkham-hq/shared-ui'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
+import { useUrlWithRedirect } from '../utils/use-url-with-redirect'
 
 export default function SignUpForm() {
   const { mutateAsync: signUp, isLoading } = trpc.signup.useMutation()
@@ -11,6 +12,8 @@ export default function SignUpForm() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const confirmSignUpUrl = useUrlWithRedirect(`/confirm-sign-up`)
 
   const router = useRouter()
 
@@ -25,12 +28,12 @@ export default function SignUpForm() {
 
     const contact = response?.CodeDeliveryDetails?.Destination
 
-    const queryParams = [`username=${username}`]
+    confirmSignUpUrl.searchParams.append('username', username)
     if (contact) {
-      queryParams.push(`contact=${contact}`)
+      confirmSignUpUrl.searchParams.append('contact', contact)
     }
 
-    router.push(`/confirm-sign-up?${queryParams.join('&')}`)
+    router.push(confirmSignUpUrl.href)
   }
 
   return (
