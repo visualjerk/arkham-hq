@@ -11,7 +11,7 @@ import {
 } from '@/lib/constants'
 import { revalidatePath } from 'next/cache'
 
-export async function signIn(prevState: any, formData: FormData) {
+export async function signIn(_: any, formData: FormData) {
   const parse = SignInDTO.safeParse({
     username: formData.get('username'),
     password: formData.get('password'),
@@ -46,11 +46,13 @@ export async function signIn(prevState: any, formData: FormData) {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       sameSite: true,
+      domain: process.env.COOKIE_DOMAIN,
     })
     cookies().set(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       sameSite: true,
+      domain: process.env.COOKIE_DOMAIN,
     })
   } catch (e) {
     return { message: 'Failed to signin' }

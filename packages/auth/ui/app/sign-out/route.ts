@@ -28,8 +28,14 @@ export async function GET(request: NextRequest) {
 
   try {
     await revokeToken(refreshToken.value)
-    cookies().delete(AUTH_TOKEN_COOKIE_NAME)
-    cookies().delete(REFRESH_TOKEN_COOKIE_NAME)
+    cookies().delete({
+      name: AUTH_TOKEN_COOKIE_NAME,
+      domain: process.env.COOKIE_DOMAIN,
+    })
+    cookies().delete({
+      name: REFRESH_TOKEN_COOKIE_NAME,
+      domain: process.env.COOKIE_DOMAIN,
+    })
   } catch (e) {
     return new Response('Failed to sign out', {
       status: 500,

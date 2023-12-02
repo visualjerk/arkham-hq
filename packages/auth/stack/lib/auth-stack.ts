@@ -12,6 +12,7 @@ import path = require('path')
 type AuthStackProps = StackProps & {
   zoneDomain: string
   domain: string
+  cookieDomain: string
 }
 
 export class AuthStack extends Stack {
@@ -80,6 +81,7 @@ export class AuthStack extends Stack {
           environment: {
             AWS_REGION: this.region,
             AWS_AUTH_CLIENT_ID: authClient.userPoolClientId,
+            COOKIE_DOMAIN: props.cookieDomain,
             NEXT_TELEMETRY_DISABLED: '1',
           },
         },
