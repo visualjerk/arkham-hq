@@ -1,15 +1,36 @@
 import { Stack, StackProps } from 'aws-cdk-lib'
+import * as route from 'aws-cdk-lib/aws-route53'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
 import * as ec2 from 'aws-cdk-lib/aws-ec2'
+import * as cm from 'aws-cdk-lib/aws-certificatemanager'
 import { DockerImageAsset } from 'aws-cdk-lib/aws-ecr-assets'
 import * as ecs from 'aws-cdk-lib/aws-ecs'
 import * as ecsPatterns from 'aws-cdk-lib/aws-ecs-patterns'
 import { Construct } from 'constructs'
 import path = require('path')
 
+type AuthStackProps = StackProps & {
+  zoneDomain: string
+  domain: string
+}
+
 export class AuthStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: AuthStackProps) {
     super(scope, id, props)
+
+    const publicHostedZone = route.HostedZone.fromLookup(
+      this,
+      'ArkhamHqAuthHostedZone',
+      {
+        domainName: props.zoneDomain,
+      }
+    )
+
+    const certificate = new cm.Certificate(this, 'ArkhamHqAuthCertificate', {
+      domainName: props.domain,
+      certificateName: 'Arkham HQ Auth',
+      validation: cm.CertificateValidation.fromDns(publicHostedZone),
+    })
 
     const userPool = new cognito.UserPool(this, 'ArkhamHqAuthUserPool', {
       signInCaseSensitive: false,
@@ -45,15 +66,14 @@ export class AuthStack extends Stack {
       file: 'packages/auth/ui/docker/Dockerfile',
     })
 
-    // Instantiate Fargate Service with a cluster and a local image that gets
-    // uploaded to an S3 staging bucket prior to being uploaded to ECR.
-    // A new repository is created in ECR and the Fargate service is created
-    // with the image from ECR.
     new ecsPatterns.ApplicationLoadBalancedFargateService(
       this,
       'ArkhamHqAuthUi',
       {
         cluster,
+        certificate,
+        domainName: props.domain,
+        domainZone: publicHostedZone,
         taskImageOptions: {
           image: ecs.ContainerImage.fromDockerImageAsset(dockerImage),
           containerPort: 3000,
