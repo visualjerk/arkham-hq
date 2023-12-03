@@ -1,5 +1,7 @@
 import { LinkButton, PageHeading } from '@arkham-hq/shared-ui'
 import { cookies } from 'next/headers'
+import { getPacks } from './packs'
+import PackList from './pack-list'
 
 const baseUrl = process.env.BASE_URL
 const authBaseUrl = process.env.AUTH_SERVICE_URL
@@ -25,6 +27,7 @@ export default async function Home() {
   const signOutLink = `${authBaseUrl}/sign-out?redirectTo=${baseUrl}`
 
   const user = await getUser()
+  const packs = await getPacks()
 
   return (
     <main className="grid gap-10 p-10">
@@ -40,6 +43,7 @@ export default async function Home() {
           <LinkButton href={signInLink}>Sign In</LinkButton>
         </div>
       )}
+      <PackList packs={packs} />
     </main>
   )
 }
