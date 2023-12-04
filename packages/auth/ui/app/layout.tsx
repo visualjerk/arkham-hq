@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <TrpcProvider>
-      <html lang="en" className="bg-slate-100">
+      <html lang="en" className="bg-stone-100">
         <body className={inter.className}>{children}</body>
       </html>
     </TrpcProvider>

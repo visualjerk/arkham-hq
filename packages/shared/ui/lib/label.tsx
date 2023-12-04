@@ -7,7 +7,7 @@ export function Label({ className, children, ...props }: LabelProps) {
   return (
     <AriaLabel
       {...props}
-      className={classNames(`text-slate-800 text-sm`, className)}
+      className={classNames(`text-stone-800 text-sm`, className)}
     >
       {children}
     </AriaLabel>

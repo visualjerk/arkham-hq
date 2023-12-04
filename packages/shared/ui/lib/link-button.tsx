@@ -10,7 +10,7 @@ export function LinkButton({ children, className, ...props }: LinkButtonProps) {
     <a
       {...props}
       className={classNames(
-        `py-3 px-4 text-center bg-indigo-700 text-indigo-100 hover:bg-indigo-800 rounded-sm font-bold tracking-wider`,
+        `py-2 px-4 text-center bg-teal-600 text-teal-50 hover:bg-teal-700 border border-teal-900 shadow-sm shadow-teal-900 rounded-md font-bold tracking-wider`,
         className
       )}
     >

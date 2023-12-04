@@ -15,7 +15,7 @@ export function Input({ className, ...props }: InputProps) {
     <AriaInput
       {...props}
       className={classNames(
-        `py-2 px-3 rounded-sm border border-slate-500 outline-2 outline-blue-400 outline-offset-2`,
+        `py-2 px-3 rounded-sm border border-stone-400 shadow-sm shadow-stone-400 outline-2 outline-blue-400 outline-offset-2 text-stone-700`,
         className
       )}
     />
