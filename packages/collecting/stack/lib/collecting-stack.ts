@@ -39,7 +39,7 @@ export class CollectingStack extends Stack {
 
     // Create VPC and Fargate Cluster
     // NOTE: Limit AZs to avoid reaching resource quotas
-    const vpc = new ec2.Vpc(this, 'ArkhamHqCollectingVpc', { maxAzs: 2 })
+    const vpc = new ec2.Vpc(this, 'ArkhamHqCollectingVpc', { maxAzs: 1 })
     const cluster = new ecs.Cluster(this, 'ArkhamHqCollectingCluster', { vpc })
 
     const dockerImage = new DockerImageAsset(

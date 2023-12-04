@@ -58,7 +58,7 @@ export class AuthStack extends Stack {
 
     // Create VPC and Fargate Cluster
     // NOTE: Limit AZs to avoid reaching resource quotas
-    const vpc = new ec2.Vpc(this, 'ArkhamHqAuthVpc', { maxAzs: 2 })
+    const vpc = new ec2.Vpc(this, 'ArkhamHqAuthVpc', { maxAzs: 1 })
     const cluster = new ecs.Cluster(this, 'ArkhamHqAuthCluster', { vpc })
 
     const dockerImage = new DockerImageAsset(this, 'ArkhamHqAuthUiImage', {
