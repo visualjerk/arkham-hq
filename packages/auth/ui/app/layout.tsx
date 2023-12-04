@@ -20,11 +20,11 @@ export default function RootLayout({
     <TrpcProvider>
       <html lang="en" className="bg-stone-100">
         <body className={inter.className}>
-          <div className="md:grid md:grid-cols-3 min-h-screen">
-            <div className="bg-teal-800 p-10 bg-gradient-to-b from-teal-700 to-teal-900">
-              <ArkhamHQLogo />
+          <div className="md:grid md:grid-cols-2 xl:grid-cols-5 min-h-screen">
+            <div className="xl:col-span-3 bg-teal-800 p-5 md:p-10 lg:p-20 bg-gradient-to-b from-teal-700 to-teal-900">
+              <ArkhamHQLogo className="md:w-60 h-auto" />
             </div>
-            <div className="md:col-span-2 p-10">{children}</div>
+            <div className="xl:col-span-2 p-5 md:p-10 lg:p-20">{children}</div>
           </div>
         </body>
       </html>

@@ -10,9 +10,9 @@ export default function SignUpPage() {
 
   return (
     <main className="grid gap-5 max-w-md">
-      <PageHeading>Sign In</PageHeading>
+      <PageHeading>Welcome Investigator</PageHeading>
       <SignInForm />
-      <Link href={signUpUrl}>Sign Up</Link>
+      <Link href={signUpUrl}>Don&apos;t have an account yet?</Link>
     </main>
   )
 }

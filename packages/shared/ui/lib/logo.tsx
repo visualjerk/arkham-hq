@@ -1,4 +1,8 @@
-export function ArkhamHQLogo() {
+import { SVGProps } from 'react'
+
+export type ArkhamHQLogoProps = SVGProps<SVGSVGElement>
+
+export function ArkhamHQLogo(props: ArkhamHQLogoProps) {
   return (
     <svg
       width="186"
@@ -6,6 +10,7 @@ export function ArkhamHQLogo() {
       viewBox="0 0 186 46"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M1 1H84.0197C84.3284 4.90902 88.231 8 93 8C97.769 8 101.672 4.90902 101.98 1H185V45H101.98C101.672 41.091 97.769 38 93 38C88.231 38 84.3284 41.091 84.0197 45H1V1Z"
