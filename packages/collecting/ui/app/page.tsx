@@ -1,6 +1,6 @@
 import { PageHeading } from '@arkham-hq/shared-ui'
-import { getPacks } from './packs'
-import PackList from './pack-list'
+import { getPacks } from './packs/packs'
+import PackList from './packs/pack-list'
 
 export default async function Home() {
   const packs = await getPacks()

@@ -7,6 +7,8 @@ export const PackSchema = z.object({
   code: z.string(),
 })
 
+export type Pack = z.infer<typeof PackSchema>
+
 export const PacksSchema = z.array(PackSchema)
 
 export type Packs = z.infer<typeof PacksSchema>
