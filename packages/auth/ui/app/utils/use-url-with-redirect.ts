@@ -1,6 +1,6 @@
 import { useSearchParams } from 'next/navigation'
 
-export function useUrlWithRedirect(url: string) {
+export function useUrlWithRedirect(url: string): URL {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirectTo')
 

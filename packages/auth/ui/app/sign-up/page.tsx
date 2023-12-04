@@ -9,7 +9,7 @@ export default function SignUpPage() {
   const signInUrl = useUrlWithRedirect(`/sign-in`)
 
   return (
-    <main className="grid gap-5 max-w-md p-10">
+    <main className="grid gap-5 max-w-md">
       <PageHeading>Sign Up</PageHeading>
       <SignUpForm />
       <Link href={signInUrl}>Sign In</Link>

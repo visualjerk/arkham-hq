@@ -1,18 +1,13 @@
-import { AUTH_TOKEN_COOKIE_NAME } from '@/lib/constants'
-import { cookies } from 'next/headers'
-import Link from 'next/link'
+import { LinkButton, PageHeading } from '@arkham-hq/shared-ui'
 
 export default function Home() {
-  const token = cookies().get(AUTH_TOKEN_COOKIE_NAME)
-
   return (
     <main className="grid gap-5 max-w-md p-10">
-      <h1 className="text-xl font-semibold">Sign In</h1>
-      {!!token && (
-        <input className="p-2 bg-white" value={token.value} readOnly></input>
-      )}
-      <Link href="/sign-in">Sign In</Link>
-      <Link href="/sign-up">Sign Up</Link>
+      <PageHeading>Welcome to Arkham HQ</PageHeading>
+      <p className="text-stone-500">Do you already have an account?</p>
+      <LinkButton href="/sign-in">Sign In</LinkButton>
+      <p className="text-stone-500">Do you like to create a new account?</p>
+      <LinkButton href="/sign-up">Sign Up</LinkButton>
     </main>
   )
 }

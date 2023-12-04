@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { EB_Garamond, Inter } from 'next/font/google'
 import '@arkham-hq/shared-ui/dist/main.css'
 import './globals.css'
-import { ArkhamHQLogo } from './logo'
 import UserMenu from './user/user-menu'
+import { ArkhamHQLogo } from '@arkham-hq/shared-ui'
 
 const fontSans = Inter({
   subsets: ['latin'],
