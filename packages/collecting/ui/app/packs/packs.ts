@@ -1,28 +1,75 @@
+import { db } from '@/prisma/db'
+import { RawPack, getRawPacks } from './raw-packs'
 import { z } from 'zod'
+import { getUser } from '@/app/user/user'
 
-const API_PACKS_URL = 'https://arkhamdb.com/api/public/packs/'
+export type Pack = RawPack & {
+  owned?: boolean
+}
 
-export const PackSchema = z.object({
-  name: z.string(),
+export type Packs = Pack[]
+
+export async function getPacks(username: string): Promise<Packs> {
+  const rawPacksQuery = getRawPacks()
+  const userPacksQuery = getUserPacks(username)
+
+  const [packs, userPacks] = await Promise.allSettled([
+    rawPacksQuery,
+    userPacksQuery,
+  ])
+
+  if (packs.status !== 'fulfilled' || userPacks.status !== 'fulfilled') {
+    throw new Error('Error fetching collection packs')
+  }
+
+  return packs.value.map((pack) => ({
+    ...pack,
+    owned: userPacks.value.some(({ packCode }) => packCode === pack.code),
+  }))
+}
+
+async function getUserPacks(username: string) {
+  return db.userPacks.findMany({
+    where: {
+      username,
+    },
+  })
+}
+
+export const PackActionPropsSchema = z.object({
   code: z.string(),
 })
 
-export type Pack = z.infer<typeof PackSchema>
+export type PackActionProps = z.infer<typeof PackActionPropsSchema>
 
-export const PacksSchema = z.array(PackSchema)
+export async function addPack({ code }: PackActionProps) {
+  const user = await getUser()
 
-export type Packs = z.infer<typeof PacksSchema>
-
-export async function getPacks() {
-  const response = await fetch(API_PACKS_URL)
-
-  if (!response.ok) {
-    throw new Error(`error loading packs: code ${response.status}`)
+  if (!user) {
+    throw new Error('Unauthorized')
   }
 
-  const rawData = await response.json()
+  return db.userPacks.create({
+    data: {
+      username: user.username,
+      packCode: code,
+    },
+  })
+}
 
-  const data = await PacksSchema.parseAsync(rawData)
+export async function removePack({ code }: PackActionProps) {
+  const user = await getUser()
 
-  return data
+  if (!user) {
+    throw new Error('Unauthorized')
+  }
+
+  await db.userPacks.delete({
+    where: {
+      usernamePackCode: {
+        username: user.username,
+        packCode: code,
+      },
+    },
+  })
 }

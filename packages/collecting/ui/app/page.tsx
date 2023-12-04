@@ -1,9 +1,15 @@
 import { PageHeading } from '@arkham-hq/shared-ui'
+import { getRawPacks } from './packs/raw-packs'
 import { getPacks } from './packs/packs'
 import PackList from './packs/pack-list'
+import { getUser } from './user/user'
 
 export default async function Home() {
-  const packs = await getPacks()
+  const user = await getUser()
+
+  const packs = user?.username
+    ? await getPacks(user.username)
+    : await getRawPacks()
 
   return (
     <main className="grid gap-10 py-5">

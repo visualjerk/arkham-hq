@@ -1,11 +1,11 @@
-version: '3'
+version: '3.1'
 
 services:
-  arkham-hq-collecting-ui:
-    build:
-      # Needed to bring the workspace's "pnpm-lock.yaml" in scope
-      context: ../../../../
-      dockerfile: packages/collecting/ui/docker/Dockerfile
-    image: arkham-hq-collecting-ui
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: arkham-collecting
     ports:
-      - '3000:3000'
+      - 5432:5432

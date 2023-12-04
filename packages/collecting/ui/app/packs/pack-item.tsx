@@ -1,5 +1,6 @@
 import { LinkButton } from '@arkham-hq/shared-ui'
 import { Pack } from './packs'
+import PackItemOwnButton from './pack-item-own-button'
 
 export type PackItemProps = {
   pack: Pack
@@ -16,8 +17,9 @@ export default function PackItem({ pack }: PackItemProps) {
         </h3>
         <p className="text-xs uppercase text-stone-500">{code}</p>
       </div>
-      <div className="mt-auto">
+      <div className="mt-auto flex gap-2">
         <LinkButton>Show Cards</LinkButton>
+        <PackItemOwnButton pack={pack} />
       </div>
     </div>
   )
