@@ -1,4 +1,3 @@
-import { db } from '@/prisma/db'
 import { z } from 'zod'
 
 const API_PACKS_URL = 'https://arkhamdb.com/api/public/packs/'
@@ -18,7 +17,9 @@ export async function getRawPacks(): Promise<RawPacks> {
   const response = await fetch(API_PACKS_URL)
 
   if (!response.ok) {
-    throw new Error(`error loading packs: code ${response.status}`)
+    const error = new Error(`error loading packs: code ${response.status}`)
+    console.error(error)
+    throw error
   }
 
   const rawData = await response.json()

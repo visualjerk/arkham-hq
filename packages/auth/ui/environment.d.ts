@@ -1,7 +1,7 @@
 namespace NodeJS {
   interface ProcessEnv {
-    AWS_REGION: string
-    AWS_AUTH_CLIENT_ID: string
+    BASE_URL: string
     COOKIE_DOMAIN: string
+    AWS_AUTH_CLIENT_ID: string
   }
 }

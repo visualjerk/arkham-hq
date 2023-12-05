@@ -36,7 +36,7 @@ export default function SignInForm() {
           <Label>Password</Label>
           <Input name="password" type="password" />
         </TextField>
-        <input name="redirectTo" type="hidden" value={redirectTo ?? '/'} />
+        <input name="redirectTo" type="hidden" value={redirectTo ?? ''} />
         <Button type="submit">Sign In</Button>
       </Fieldset>
     </form>

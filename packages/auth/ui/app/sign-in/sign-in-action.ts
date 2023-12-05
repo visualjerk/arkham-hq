@@ -19,7 +19,7 @@ export async function signIn(_: any, formData: FormData) {
   })
 
   if (!parse.success) {
-    return { message: 'Failed to signin' }
+    return { message: 'Malformatted form data' }
   }
 
   const data = parse.data
@@ -39,7 +39,7 @@ export async function signIn(_: any, formData: FormData) {
     const refreshToken = response.AuthenticationResult?.RefreshToken
 
     if (!token || !refreshToken) {
-      return { message: 'Failed to signin' }
+      return { message: 'Missing token or refreshToken' }
     }
 
     cookies().set(AUTH_TOKEN_COOKIE_NAME, token, {
@@ -55,9 +55,9 @@ export async function signIn(_: any, formData: FormData) {
       domain: process.env.COOKIE_DOMAIN,
     })
   } catch (e) {
-    return { message: 'Failed to signin' }
+    return { message: `Failed to signin: ${e}` }
   }
 
   revalidatePath('/')
-  redirect(data.redirectTo)
+  redirect(data.redirectTo !== '' ? data.redirectTo : process.env.BASE_URL)
 }

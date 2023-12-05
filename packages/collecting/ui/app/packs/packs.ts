@@ -1,4 +1,4 @@
-import { db } from '@/prisma/db'
+import { db } from '@/db/db'
 import { RawPack, getRawPacks } from './raw-packs'
 import { z } from 'zod'
 import { getUser } from '@/app/user/user'
@@ -29,11 +29,11 @@ export async function getPacks(username: string): Promise<Packs> {
 }
 
 async function getUserPacks(username: string) {
-  return db.userPacks.findMany({
-    where: {
-      username,
-    },
-  })
+  return db()
+    .selectFrom('userPacks')
+    .selectAll()
+    .where('username', '=', username)
+    .execute()
 }
 
 export const PackActionPropsSchema = z.object({
@@ -49,12 +49,13 @@ export async function addPack({ code }: PackActionProps) {
     throw new Error('Unauthorized')
   }
 
-  return db.userPacks.create({
-    data: {
+  return db()
+    .insertInto('userPacks')
+    .values({
       username: user.username,
       packCode: code,
-    },
-  })
+    })
+    .executeTakeFirstOrThrow()
 }
 
 export async function removePack({ code }: PackActionProps) {
@@ -64,12 +65,9 @@ export async function removePack({ code }: PackActionProps) {
     throw new Error('Unauthorized')
   }
 
-  await db.userPacks.delete({
-    where: {
-      usernamePackCode: {
-        username: user.username,
-        packCode: code,
-      },
-    },
-  })
+  await db()
+    .deleteFrom('userPacks')
+    .where('username', '=', user.username)
+    .where('packCode', '=', code)
+    .executeTakeFirstOrThrow()
 }
