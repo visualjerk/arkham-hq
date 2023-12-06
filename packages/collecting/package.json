@@ -6,8 +6,7 @@
     ".next"
   ],
   "scripts": {
-    "dev": "sst bind next dev",
-    "dev:db": "docker-compose -f docker/docker-compose.yml up",
+    "dev": "sst bind 'next dev --experimental-https -H dev-collecting.arkhamhq.aws.visualjerk.de'",
     "build": "sst bind next build",
     "start": "next start",
     "lint": "next lint"
