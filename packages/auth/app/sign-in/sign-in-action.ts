@@ -9,7 +9,6 @@ import {
   AUTH_TOKEN_COOKIE_NAME,
   REFRESH_TOKEN_COOKIE_NAME,
 } from '@/lib/constants'
-import { revalidatePath } from 'next/cache'
 
 export async function signIn(_: any, formData: FormData) {
   const parse = SignInDTO.safeParse({
@@ -58,6 +57,5 @@ export async function signIn(_: any, formData: FormData) {
     return { message: `Failed to signin: ${e}` }
   }
 
-  revalidatePath('/')
   redirect(data.redirectTo !== '' ? data.redirectTo : process.env.BASE_URL)
 }

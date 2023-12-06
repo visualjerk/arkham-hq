@@ -16,14 +16,20 @@ export async function GET() {
     AccessToken: token.value,
   })
 
-  const response = await getClient().send(command)
+  try {
+    const response = await getClient().send(command)
 
-  return new Response(
-    JSON.stringify({
-      username: response.Username,
-    }),
-    {
-      status: 200,
-    }
-  )
+    return new Response(
+      JSON.stringify({
+        username: response.Username,
+      }),
+      {
+        status: 200,
+      }
+    )
+  } catch (e) {
+    return new Response('unauthorized', {
+      status: 401,
+    })
+  }
 }
