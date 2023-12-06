@@ -1,6 +1,6 @@
-import { Button } from '@arkham-hq/shared-ui'
 import { Pack, PackActionPropsSchema, addPack, removePack } from './packs'
 import { revalidatePath } from 'next/cache'
+import { ToggleButton } from './toggle-button'
 
 export type PackItemOwnButtonProps = {
   pack: Pack
@@ -29,7 +29,9 @@ export default async function PackItemOwnButton({
 
   return (
     <form action={handleFormAction}>
-      <Button type="submit">{owned ? 'Remove' : 'Add'}</Button>
+      <ToggleButton type="submit" checked={owned === true}>
+        {owned ? 'In Collection' : 'Add to Collection'}
+      </ToggleButton>
       <input type="hidden" name="code" value={code} />
     </form>
   )

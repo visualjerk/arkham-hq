@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "sst bind 'next dev --experimental-https -H dev-collecting.arkhamhq.aws.visualjerk.de'",
     "build": "sst bind next build",
+    "deploy": "npx sst deploy --stage prod",
     "start": "next start",
     "lint": "next lint"
   },
