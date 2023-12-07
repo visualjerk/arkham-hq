@@ -24,6 +24,11 @@ export default {
         engine: 'postgresql13.9',
         defaultDatabaseName: 'arkhamcollecting',
         migrations: 'db/migrations',
+        scaling: {
+          minCapacity: 'ACU_2',
+          maxCapacity: 'ACU_4',
+          autoPause: true,
+        },
       })
 
       const site = new NextjsSite(stack, 'ArkhamHqCollectingUi', {
