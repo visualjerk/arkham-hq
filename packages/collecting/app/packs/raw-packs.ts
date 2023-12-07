@@ -13,8 +13,12 @@ const RawPacksSchema = z.array(RawPackSchema)
 
 export type RawPacks = z.infer<typeof RawPacksSchema>
 
+export const RAW_PACKS_TAG = 'raw-packs'
+
 export async function getRawPacks(): Promise<RawPacks> {
-  const response = await fetch(API_PACKS_URL)
+  const response = await fetch(API_PACKS_URL, {
+    next: { revalidate: 3600, tags: [RAW_PACKS_TAG] },
+  })
 
   if (!response.ok) {
     const error = new Error(`error loading packs: code ${response.status}`)

@@ -10,9 +10,15 @@ export const UserSchema = z.object({
 
 export type User = z.infer<typeof UserSchema>
 
+export const USER_TAG = 'user'
+
 export async function getUser(): Promise<undefined | User> {
   const response = await fetch(`${authBaseUrl}/user`, {
     headers: { Cookie: cookies().toString() },
+    next: {
+      revalidate: 5,
+      tags: [USER_TAG],
+    },
   })
 
   if (!response.ok) {

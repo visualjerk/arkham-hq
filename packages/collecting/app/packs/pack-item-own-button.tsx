@@ -1,15 +1,17 @@
-import { Pack, PackActionPropsSchema, addPack, removePack } from './packs'
-import { revalidatePath } from 'next/cache'
+import {
+  PackActionPropsSchema,
+  PackDetails,
+  addPack,
+  removePack,
+} from './packs'
 import { ToggleButton } from './toggle-button'
 
 export type PackItemOwnButtonProps = {
-  pack: Pack
+  pack: PackDetails
 }
 
-export default async function PackItemOwnButton({
-  pack,
-}: PackItemOwnButtonProps) {
-  const { code, owned } = pack
+export default function PackItemOwnButton({ pack }: PackItemOwnButtonProps) {
+  const { owned, code } = pack
 
   async function handleFormAction(formData: FormData) {
     'use server'
@@ -24,7 +26,6 @@ export default async function PackItemOwnButton({
 
     const query = owned ? removePack(parse.data) : addPack(parse.data)
     await query
-    revalidatePath('/')
   }
 
   return (

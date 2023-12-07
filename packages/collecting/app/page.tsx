@@ -1,22 +1,18 @@
 import { PageHeading } from '@arkham-hq/shared-ui'
-import { getRawPacks } from './packs/raw-packs'
 import { getPacks } from './packs/packs'
 import PackList from './packs/pack-list'
-import { getUser } from './user/user'
+import { Suspense } from 'react'
 
 export default async function Home() {
-  const user = await getUser()
-
-  const packs = user?.username
-    ? await getPacks(user.username)
-    : await getRawPacks()
+  const packs = await getPacks()
 
   return (
-    <main className="grid gap-10 py-5">
-      <PageHeading>Arkham HQ Collecting</PageHeading>
+    <main className="pt-5 pb-20">
+      <PageHeading className="mb-4">All Packs</PageHeading>
       <section>
-        <h2 className="mb-4">All Packs</h2>
-        <PackList packs={packs} />
+        <Suspense fallback={<div>Loading packs ...</div>}>
+          <PackList packs={packs} />
+        </Suspense>
       </section>
     </main>
   )
