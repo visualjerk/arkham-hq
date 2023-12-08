@@ -13,6 +13,6 @@ We assume multiple teams develop Arkham HQ, each team owning one bounded context
 
 ## Infrastructure
 
-The [initial infrastructure draft](https://excalidraw.com/#json=Xh69SWw_CUcQASQQF-XiF,j7rs9pbISMRX-f2gkCNe3A) used EC2 instances for hosting Next.js apps. As these need permanentaly running Nat Gateways, which are charged on an hourly base, it turned out to be a quite cost intense solution.
+The [initial infrastructure draft](https://excalidraw.com/#json=Xh69SWw_CUcQASQQF-XiF,j7rs9pbISMRX-f2gkCNe3A) used EC2 instances for hosting Next.js apps. As these need permanentaly running Nat Gateways, which are charged on an hourly basis, it turned out to be a quite cost intensive solution.
 
 We moved to running Next.js in Lambda Functions with the help of [SST](https://sst.dev) and [OpenNext](https://open-next.js.org).
