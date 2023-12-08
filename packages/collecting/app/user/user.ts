@@ -31,3 +31,11 @@ export async function getUser(): Promise<undefined | User> {
 
   return data
 }
+
+export async function getUserOrThrow() {
+  const user = await getUser()
+  if (!user) {
+    throw new Error('Unauthorized')
+  }
+  return user
+}

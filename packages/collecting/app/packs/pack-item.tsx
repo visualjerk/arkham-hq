@@ -1,15 +1,13 @@
 import { classNames } from '@arkham-hq/shared-ui'
-import { Pack, getPackDetails } from './packs'
+import { Pack } from './packs'
 import PackItemOwnButton from './pack-item-own-button'
 
 export type PackItemProps = {
   pack: Pack
 }
 
-export default async function PackItem({ pack }: PackItemProps) {
-  const packDetails = await getPackDetails(pack)
-
-  const { owned, name, code } = packDetails
+export default function PackItem({ pack }: PackItemProps) {
+  const { owned, name, code } = pack
 
   return (
     <div
@@ -21,13 +19,13 @@ export default async function PackItem({ pack }: PackItemProps) {
       )}
     >
       <div>
-        <h3 className="font-serif font-medium text-2xl leading-none text-stone-700 mb-2">
+        <h3 className="font-serif font-medium text-xl leading-none text-stone-700 mb-2">
           {name}
         </h3>
         <p className="text-xs uppercase text-stone-500">{code}</p>
       </div>
       <div className="mt-auto flex gap-2">
-        <PackItemOwnButton pack={packDetails} />
+        <PackItemOwnButton pack={pack} />
       </div>
     </div>
   )

@@ -1,61 +1,71 @@
 import { db } from '@/db/db'
 import { RawPack, getRawPacks } from './raw-packs'
 import { z } from 'zod'
-import { getUser } from '@/app/user/user'
+import { getUser, getUserOrThrow } from '@/app/user/user'
 import { revalidateTag, unstable_cache } from 'next/cache'
 
-export type Pack = RawPack
-
-export type PackDetails = Pack & {
+export type Pack = RawPack & {
   owned?: boolean
 }
 
 export type Packs = Pack[]
 
 export async function getPacks(): Promise<Packs> {
-  return getRawPacks()
+  const [rawPacksQuery, userPacksInfoQuery] = await Promise.allSettled([
+    getRawPacks(),
+    getUserPacksInfo(),
+  ])
+
+  if (
+    rawPacksQuery.status === 'rejected' ||
+    userPacksInfoQuery.status === 'rejected'
+  ) {
+    return []
+  }
+
+  const userPacksInfo = userPacksInfoQuery.value
+
+  return rawPacksQuery.value.map((rawPack) => ({
+    ...rawPack,
+    owned: userPacksInfo.some(({ packCode }) => packCode === rawPack.code),
+  }))
 }
 
-export function getPackDetailsTag(packCode: string) {
-  return `pack-details-${packCode}`
+type UserPackInfo = {
+  packCode: string
 }
 
-export async function getPackDetails(pack: Pack): Promise<PackDetails> {
+async function getUserPacksInfo(): Promise<UserPackInfo[]> {
   const user = await getUser()
 
   if (!user) {
-    return pack
+    return []
   }
 
-  const cachedDoesUserOwnPack = unstable_cache(
-    (username: string, packCode: string) => doesUserOwnPack(username, packCode),
-    ['pack-details', user.username, pack.code],
-    {
-      tags: [getPackDetailsTag(pack.code)],
-    }
-  )
-
-  const owned = await cachedDoesUserOwnPack(user.username, pack.code)
-
-  return {
-    ...pack,
-    owned,
-  }
+  return cachedGetUserPacksInfoFromDb(user.username)
 }
 
-async function doesUserOwnPack(
-  username: string,
-  packCode: string
-): Promise<boolean> {
+async function getUserPacksInfoFromDb(
+  username: string
+): Promise<UserPackInfo[]> {
   const result = await db()
     .selectFrom('userPacks')
     .select('packCode')
     .where('username', '=', username)
-    .where('packCode', '=', packCode)
-    .executeTakeFirst()
+    .execute()
 
-  return result !== undefined
+  return result
 }
+
+const GET_USER_PACKS_INFO_TAG = 'user-packs-info'
+
+const cachedGetUserPacksInfoFromDb = unstable_cache(
+  getUserPacksInfoFromDb,
+  ['user-packs-info'],
+  {
+    tags: [GET_USER_PACKS_INFO_TAG],
+  }
+)
 
 export const PackActionPropsSchema = z.object({
   code: z.string(),
@@ -64,11 +74,7 @@ export const PackActionPropsSchema = z.object({
 export type PackActionProps = z.infer<typeof PackActionPropsSchema>
 
 export async function addPack({ code }: PackActionProps) {
-  const user = await getUser()
-
-  if (!user) {
-    throw new Error('Unauthorized')
-  }
+  const user = await getUserOrThrow()
 
   await db()
     .insertInto('userPacks')
@@ -78,15 +84,11 @@ export async function addPack({ code }: PackActionProps) {
     })
     .executeTakeFirstOrThrow()
 
-  revalidateTag(getPackDetailsTag(code))
+  revalidateTag(GET_USER_PACKS_INFO_TAG)
 }
 
 export async function removePack({ code }: PackActionProps) {
-  const user = await getUser()
-
-  if (!user) {
-    throw new Error('Unauthorized')
-  }
+  const user = await getUserOrThrow()
 
   await db()
     .deleteFrom('userPacks')
@@ -94,5 +96,5 @@ export async function removePack({ code }: PackActionProps) {
     .where('packCode', '=', code)
     .executeTakeFirstOrThrow()
 
-  revalidateTag(getPackDetailsTag(code))
+  revalidateTag(GET_USER_PACKS_INFO_TAG)
 }

@@ -1,13 +1,8 @@
-import {
-  PackActionPropsSchema,
-  PackDetails,
-  addPack,
-  removePack,
-} from './packs'
+import { PackActionPropsSchema, Pack, addPack, removePack } from './packs'
 import { ToggleButton } from './toggle-button'
 
 export type PackItemOwnButtonProps = {
-  pack: PackDetails
+  pack: Pack
 }
 
 export default function PackItemOwnButton({ pack }: PackItemOwnButtonProps) {
