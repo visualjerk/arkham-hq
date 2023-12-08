@@ -1,6 +1,8 @@
 import { classNames } from '@arkham-hq/shared-ui'
 import { Pack } from './packs'
 import PackItemOwnButton from './pack-item-own-button'
+import PackCards from './pack-cards'
+import { Suspense } from 'react'
 
 export type PackItemProps = {
   pack: Pack
@@ -23,6 +25,11 @@ export default function PackItem({ pack }: PackItemProps) {
           {name}
         </h3>
         <p className="text-xs uppercase text-stone-500">{code}</p>
+      </div>
+      <div>
+        <Suspense fallback={<div>Loading cards ...</div>}>
+          <PackCards pack={pack} />
+        </Suspense>
       </div>
       <div className="mt-auto flex gap-2">
         <PackItemOwnButton pack={pack} />

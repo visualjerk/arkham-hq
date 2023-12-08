@@ -13,6 +13,10 @@ const config: Config = {
         serif: ['var(--font-serif)'],
         mono: ['var(--font-roboto-mono)'],
       },
+      aspectRatio: {
+        card: '100/140',
+        'card-horizontal': '140/100',
+      },
     },
   },
   plugins: [],
