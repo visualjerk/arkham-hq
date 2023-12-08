@@ -5,7 +5,7 @@ export default {
   config(_input) {
     return {
       name: 'ArkhamHqAuth',
-      region: 'us-east-1',
+      region: 'eu-central-1',
     }
   },
   stacks(app) {

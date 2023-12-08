@@ -2,5 +2,9 @@
   "hosted-zone:account=115841610058:domainName=aws.visualjerk.de:region=us-east-1": {
     "Id": "/hostedzone/Z0324001UYJGS2QO51RI",
     "Name": "aws.visualjerk.de."
+  },
+  "hosted-zone:account=115841610058:domainName=aws.visualjerk.de:region=eu-central-1": {
+    "Id": "/hostedzone/Z0324001UYJGS2QO51RI",
+    "Name": "aws.visualjerk.de."
   }
 }
