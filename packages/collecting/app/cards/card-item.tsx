@@ -1,17 +1,19 @@
 import Image from 'next/image'
-import { Card } from './cards'
+import { Card } from './card-schema'
 import { HTMLAttributes } from 'react'
 
 export type CardItemProps = HTMLAttributes<HTMLDivElement> & {
   card: Card
 }
 
+const baseImageUrl = process.env.BASE_IMAGE_URL
+
 export default async function CardItem({ card, ...props }: CardItemProps) {
   return (
     <div {...props}>
       {card.imageSrc ? (
         <Image
-          src={card.imageSrc}
+          src={`${baseImageUrl}${card.imageSrc}`}
           alt={card.name}
           width={100}
           height={140}

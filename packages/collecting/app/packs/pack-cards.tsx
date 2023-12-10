@@ -1,5 +1,5 @@
 import { Pack } from './packs'
-import { getPackCards } from '../cards/cards'
+import { getPackCards } from '../cards/cards-api'
 import CardItem from '../cards/card-item'
 
 export type PackCardsProps = {

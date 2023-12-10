@@ -4,9 +4,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'arkhamdb.com',
+        hostname: '**.amazonaws.com',
         port: '',
-        pathname: '/bundles/**/*',
       },
     ],
   },

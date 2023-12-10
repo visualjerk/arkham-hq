@@ -1,5 +1,5 @@
 import { SSTConfig } from 'sst'
-import { NextjsSite, RDS } from 'sst/constructs'
+import { Bucket, Cron, NextjsSite, RDS } from 'sst/constructs'
 
 export default {
   config(_) {
@@ -31,6 +31,27 @@ export default {
         },
       })
 
+      const bucket = new Bucket(stack, 'ArkhamHqCollectingBucket', {
+        cors: [
+          {
+            allowedMethods: ['GET', 'HEAD'],
+            allowedOrigins: ['*'],
+          },
+        ],
+      })
+      const baseImageUrl = `https://${bucket.cdk.bucket.bucketRegionalDomainName}/`
+
+      new Cron(stack, 'ArkhamHqCollectionSync', {
+        schedule: 'rate(7 days)',
+        job: {
+          function: {
+            handler: 'jobs/cards-sync-job.handler',
+            bind: [bucket],
+            timeout: '15 minutes',
+          },
+        },
+      })
+
       const site = new NextjsSite(stack, 'ArkhamHqCollectingUi', {
         dev: {
           url: baseUrl,
@@ -43,6 +64,7 @@ export default {
         environment: {
           AUTH_SERVICE_URL: authServiceUrl,
           BASE_URL: baseUrl,
+          BASE_IMAGE_URL: baseImageUrl,
           NEXT_TELEMETRY_DISABLED: '1',
         },
       })
