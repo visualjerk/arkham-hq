@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Card } from './card-schema'
 import { HTMLAttributes } from 'react'
 
@@ -12,7 +11,9 @@ export default async function CardItem({ card, ...props }: CardItemProps) {
   return (
     <div {...props}>
       {card.imageSrc ? (
-        <Image
+        // Next Image results in significantly slower loading of initial page
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={`${baseImageUrl}${card.imageSrc}`}
           alt={card.name}
           width={100}
